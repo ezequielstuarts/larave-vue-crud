@@ -6,19 +6,18 @@
 
         <title>Laravel</title>
 
-        <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
 
 
     </head>
     <body>
 
-        <div id="main" class="container">
+        <div class="container">
             @yield('content')
         </div>
-bbbbb
 
-        <script src="{{asset('js/app.js')}}"></script>
+        <script src="{{ asset( 'js/app.js' ) }}"></script>
     </body>
 </html>

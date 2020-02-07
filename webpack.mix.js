@@ -11,7 +11,7 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.scripts([
+mix.js([
     'resources/js/vue.js',
     'resources/js/axios.js',
     'resources/js/app.js',

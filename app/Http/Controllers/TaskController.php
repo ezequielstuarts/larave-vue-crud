@@ -13,20 +13,21 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tasks = Task::get();
-        return $tasks;
-    }
+        $tasks = Task::orderBy('id', 'DESC')->paginate(10);
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return [
+            'pagination' => [
+                'total'        => $tasks->total(),
+                'current_page' => $tasks->currentPage(),
+                'per_page'     => $tasks->perPage(),
+                'last_page'    => $tasks->lastPage(),
+                'from'         => $tasks->firstItem(),
+                'to'           => $tasks->lastPage(),
+            ],
+            'tasks' => $tasks
+        ];
     }
 
     /**
@@ -37,19 +38,13 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $this->validate($request, [
+            'keep' => 'required'
+        ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $task = Task::findOrFail($id);
-        return $task;
+        Task::create($request->all());
+
+        return;
     }
 
     /**
@@ -61,7 +56,11 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'keep' => 'required',
+        ]);
+        Task::find($id)->update($request->all());
+        return;
     }
 
     /**
@@ -72,7 +71,7 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        $task = Taks::findOrFail($id);
+        $task = Task::findOrFail($id);
         $task->delete();
     }
 }
